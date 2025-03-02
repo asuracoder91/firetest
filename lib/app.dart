@@ -1,54 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 
-const List<Widget> _pages = [Text('Home'), Text('Write'), Text('Profile')];
+import 'router/router_provider.dart';
 
-class Application extends StatefulWidget {
+class Application extends ConsumerWidget {
   const Application({super.key});
 
   @override
-  State<Application> createState() => _ApplicationState();
-}
-
-class _ApplicationState extends State<Application> {
-  int index = 0;
-
-  @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routeProvider);
+    return MaterialApp.router(
+      builder:
+          (context, child) => FTheme(
+            data:
+                MediaQuery.platformBrightnessOf(context) == Brightness.dark
+                    ? FThemes.zinc.dark
+                    : FThemes.zinc.light,
+            child: child!,
+          ),
+      routerConfig: router,
+    );
   }
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-    builder:
-        (context, child) => FTheme(
-          data:
-              MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                  ? FThemes.zinc.dark
-                  : FThemes.zinc.light,
-          child: child!,
-        ),
-    home: FScaffold(
-      header: FHeader(title: const Text('Firepod')),
-      content: _pages[index],
-      footer: FBottomNavigationBar(
-        index: index,
-        onChange: (index) => setState(() => this.index = index),
-        children: [
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.house),
-            label: const Text('Home'),
-          ),
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.pencil),
-            label: const Text('Write'),
-          ),
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.user),
-            label: const Text('Profile'),
-          ),
-        ],
-      ),
-    ),
-  );
 }
