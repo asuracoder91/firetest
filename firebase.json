@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"ios":{"default":{"projectId":"asuracoder-firebase-test","appId":"1:641975841374:ios:585e0cde993148650f3acf","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"asuracoder-firebase-test","configurations":{"ios":"1:641975841374:ios:585e0cde993148650f3acf"}}}}}}
