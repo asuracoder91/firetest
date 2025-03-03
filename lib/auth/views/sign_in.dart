@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../router/router_names.dart';
+import '../../router/router_constants.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -29,7 +29,7 @@ class SignIn extends StatelessWidget {
             FButton(
               label: const Text("Create an account"),
               style: FButtonStyle.ghost,
-              onPress: () => context.go(RouteNames.signup),
+              onPress: () => context.goNamed(RouteNames.signup),
             ),
           ],
         ),

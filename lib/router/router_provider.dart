@@ -9,7 +9,7 @@ import '../features/views/home_page.dart';
 import '../features/views/navigation_screen.dart';
 import '../features/views/profile_page.dart';
 import '../features/views/write_page.dart';
-import 'router_names.dart';
+import 'router_constants.dart';
 
 part 'router_provider.g.dart';
 
@@ -19,14 +19,16 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter route(Ref ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RouteNames.signup,
+    initialLocation: RouteURL.signup,
     routes: [
       GoRoute(
-        path: RouteNames.signin,
+        path: RouteURL.signin,
+        name: RouteNames.signin,
         builder: (context, state) => const SignIn(),
       ),
       GoRoute(
-        path: RouteNames.signup,
+        path: RouteURL.signup,
+        name: RouteNames.signup,
         builder: (context, state) => const SignUp(),
       ),
       StatefulShellRoute.indexedStack(
@@ -37,7 +39,8 @@ GoRouter route(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: RouteNames.home,
+                path: RouteURL.home,
+                name: RouteNames.home,
                 builder: (context, state) => const HomePage(),
               ),
             ],
@@ -45,7 +48,8 @@ GoRouter route(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: RouteNames.write,
+                path: RouteURL.write,
+                name: RouteNames.write,
                 builder: (context, state) => const WritePage(),
               ),
             ],
@@ -53,7 +57,8 @@ GoRouter route(Ref ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: RouteNames.profile,
+                path: RouteURL.profile,
+                name: RouteNames.profile,
                 builder: (context, state) => const ProfilePage(),
               ),
             ],
