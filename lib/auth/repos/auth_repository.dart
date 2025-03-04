@@ -25,4 +25,20 @@ class AuthRepository {
       throw Exception(e);
     }
   }
+
+  Future<void> signin({required String email, required String password}) async {
+    try {
+      await fbAuth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> signout() async {
+    try {
+      await fbAuth.signOut();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
