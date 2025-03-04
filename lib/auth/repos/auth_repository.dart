@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firetest/auth/firebase_app_instances.dart';
+import 'package:firetest/auth/models/app_user_model.dart';
 
 class AuthRepository {
   User? get currentUser => fbAuth.currentUser;
@@ -37,6 +39,21 @@ class AuthRepository {
   Future<void> signout() async {
     try {
       await fbAuth.signOut();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<AppUserModel> getProfile({required String uid}) async {
+    try {
+      final DocumentSnapshot appUserDoc = await usersCollection.doc(uid).get();
+
+      if (appUserDoc.exists) {
+        final appUser = AppUserModel.fromDoc(appUserDoc);
+        return appUser;
+      }
+
+      throw 'User not found';
     } catch (e) {
       throw Exception(e);
     }

@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../auth/repos/auth_repository_provider.dart';
 import '../auth/views/sign_in.dart';
 import '../auth/views/sign_up.dart';
 import '../features/views/home_page.dart';
@@ -17,9 +19,28 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @riverpod
 GoRouter route(Ref ref) {
+  final authState = ref.watch(authStateStreamProvider);
+
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: RouteURL.signup,
+    redirect: (context, state) {
+      if (authState is AsyncLoading<User?>) {
+        return RouteURL.signin;
+      }
+
+      final authenticated = authState.valueOrNull != null;
+
+      final authenticating =
+          (state.matchedLocation == RouteURL.signin) ||
+          (state.matchedLocation == RouteURL.signup);
+
+      if (authenticated == false) {
+        return authenticating ? null : RouteURL.signin;
+      }
+
+      return (authenticating) ? RouteURL.home : null;
+    },
     routes: [
       GoRoute(
         path: RouteURL.signin,
