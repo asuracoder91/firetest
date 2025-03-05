@@ -6,14 +6,26 @@ import 'package:go_router/go_router.dart';
 import '../../router/router_constants.dart';
 import '../repos/auth_repository_provider.dart';
 
-class SignIn extends ConsumerWidget {
+class SignIn extends ConsumerStatefulWidget {
   const SignIn({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+  ConsumerState<SignIn> createState() => _SignInState();
+}
 
+class _SignInState extends ConsumerState<SignIn> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader(title: const Text('Sign In')),
 
@@ -44,9 +56,6 @@ class SignIn extends ConsumerWidget {
                         email: emailController.text,
                         password: passwordController.text,
                       );
-                  if (context.mounted) {
-                    context.goNamed(RouteNames.home);
-                  }
                 } catch (e) {
                   print(e);
                 }

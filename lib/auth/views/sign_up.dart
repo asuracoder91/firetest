@@ -6,15 +6,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../router/router_constants.dart';
 import '../repos/auth_repository_provider.dart';
 
-class SignUp extends ConsumerWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final nicknameController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
+  ConsumerState<SignUp> createState() => _SignUpState();
+}
 
+class _SignUpState extends ConsumerState<SignUp> {
+  final nicknameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nicknameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FScaffold(
       header: FHeader(title: const Text('Sign Up')),
       content: Padding(
