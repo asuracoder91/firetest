@@ -1,13 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../router/router_constants.dart';
 import '../repos/auth_repository_provider.dart';
 
-class SignUp extends ConsumerWidget {
-  const SignUp({super.key});
+@RoutePage()
+class SignUpScreen extends ConsumerWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,9 +50,6 @@ class SignUp extends ConsumerWidget {
                         email: emailController.text,
                         password: passwordController.text,
                       );
-                  if (context.mounted) {
-                    context.goNamed(RouteNames.home);
-                  }
                 } catch (e) {
                   print(e);
                 }
@@ -61,7 +59,7 @@ class SignUp extends ConsumerWidget {
             FButton(
               label: const Text('If you have an account, sign in'),
               style: FButtonStyle.ghost,
-              onPress: () => context.goNamed(RouteNames.signin),
+              onPress: () => {context.router.pushPath(RoutePath.signin)},
             ),
           ],
         ),

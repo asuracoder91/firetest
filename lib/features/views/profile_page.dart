@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
@@ -5,6 +6,7 @@ import 'package:forui/forui.dart';
 import '../../auth/firebase_app_instances.dart';
 import '../../auth/repos/auth_repository_provider.dart';
 
+@RoutePage()
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 

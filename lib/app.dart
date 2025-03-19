@@ -9,7 +9,7 @@ class Application extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routeProvider);
+    final router = ref.watch(routerProvider);
     return MaterialApp.router(
       builder:
           (context, child) => FTheme(
@@ -19,7 +19,7 @@ class Application extends ConsumerWidget {
                     : FThemes.zinc.light,
             child: child!,
           ),
-      routerConfig: router,
+      routerConfig: router.config(),
     );
   }
 }

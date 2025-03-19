@@ -1,42 +1,42 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../router/router_provider.dart';
+
+@RoutePage()
 class NavigationScreen extends StatelessWidget {
-  const NavigationScreen({super.key, required this.navigationShell});
-
-  final StatefulNavigationShell navigationShell;
+  const NavigationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FScaffold(
-      header: FHeader(title: const Text('Firepod')),
-      content: navigationShell,
-      footer: FBottomNavigationBar(
-        index: navigationShell.currentIndex,
-        onChange: (int index) => _onTap(context, index),
-        children: [
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.house),
-            label: const Text('Home'),
+    return AutoTabsRouter(
+      routes: const [HomeRoute(), WriteRoute(), ProfileRoute()],
+      builder: (context, child) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return FScaffold(
+          header: FHeader(title: const Text('Firepod')),
+          content: child,
+          footer: FBottomNavigationBar(
+            index: tabsRouter.activeIndex,
+            onChange: (int index) => tabsRouter.setActiveIndex(index),
+            children: [
+              FBottomNavigationBarItem(
+                icon: FIcon(FAssets.icons.house),
+                label: const Text('Home'),
+              ),
+              FBottomNavigationBarItem(
+                icon: FIcon(FAssets.icons.pencil),
+                label: const Text('Write'),
+              ),
+              FBottomNavigationBarItem(
+                icon: FIcon(FAssets.icons.user),
+                label: const Text('Profile'),
+              ),
+            ],
           ),
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.pencil),
-            label: const Text('Write'),
-          ),
-          FBottomNavigationBarItem(
-            icon: FIcon(FAssets.icons.user),
-            label: const Text('Profile'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onTap(BuildContext context, int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
+        );
+      },
     );
   }
 }
