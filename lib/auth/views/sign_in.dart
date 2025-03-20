@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:forui/forui.dart';
 
 import '../../router/router_constants.dart';
+import '../repos/auth_repository_provider.dart';
 
 @RoutePage()
 class SignInScreen extends ConsumerWidget {
@@ -37,7 +38,14 @@ class SignInScreen extends ConsumerWidget {
             FButton(
               label: const Text('Sign In'),
               onPress: () async {
-                try {} catch (e) {
+                try {
+                  await ref
+                      .read(authRepositoryProvider)
+                      .signin(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+                } catch (e) {
                   print(e);
                 }
               },
